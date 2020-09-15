@@ -1,7 +1,7 @@
 package com.ryanairAutomation.Pages;
 
+import com.ryanairAutomation.utilities.BrowserUtils;
 import com.ryanairAutomation.utilities.Driver;
-import io.cucumber.java.sl.In;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,7 +34,7 @@ public class CreditCartPage {
     @FindBy(xpath = "(//div[*='Spain (+34)'])[2]")
     public WebElement Spain;
 
-    @FindBy(xpath = "//input[@class='b2 date-placeholder _error']")
+    @FindBy(xpath = "//*[text()='Phone number *']/../div/input")
     public WebElement phoneNumber;
 
     @FindBy(xpath = "//*[text()='Card number *']/../div/input")
@@ -52,7 +52,7 @@ public class CreditCartPage {
     @FindBy(xpath = "//ry-input-d[@data-ref='add-card-modal__city']//div/input")
     public WebElement city;
 
-    @FindBy(xpath = "//input[@class='ng-tns-c73-3 _inner__infix--dropdown _inner__infix _inner__infix--idle']")
+    @FindBy(xpath = "//*[contains(text(),'Country *')]/../../input")
     public WebElement country;
 
     @FindBy(xpath = "//*[text()='Postcode/ZIP code *']/..//input")
@@ -67,26 +67,38 @@ public class CreditCartPage {
     @FindBy(xpath = "//*[text()='Month']/..")
     public WebElement monthDropDown;
 
-    @FindBy(className = "dropdown b2 dropdown--opened")
+    @FindBy(xpath = "(//*[contains(text(),'Currency')][1]/..//button)[1]")
     public WebElement currency;
 
-    @FindBy(xpath = "//input[@id='termsAndConditions']")
+    @FindBy(xpath = "//*[contains(text(),'EUR')]")
+    public WebElement currencyType;
+
+    @FindBy(xpath = "//input[@id='termsAndConditions']/following-sibling::div[1]")
     public WebElement clickPayTick;
 
-    @FindBy(className = "pay-button ry-button--gradient-yellow")
+    @FindBy(xpath = "//*[contains(text(),' Pay now ')]")
     public WebElement payNow;
 
-    public void setYearandMonth(String date) {
+    @FindBy(xpath = "//ry-alert[@iconclass='icon-12']")
+    public WebElement errorMessage;
+
+    public void setYearandMonth(String date) throws InterruptedException {
         String[] Date = date.split("/");
         int years = Integer.parseInt(Date[1]);
         String exactYear = "20" + years;
         String exactMonth = Date[0] + "";
-        WebElement yearElement = Driver.get().findElement(By.xpath("//*[text()='" + exactYear + "']"));
-        yearDropDown.click();
-        yearElement.click();
+
         WebElement monthElement = Driver.get().findElement(By.xpath("//*[text()='" + exactMonth + "']/.."));
         monthDropDown.click();
+        BrowserUtils.waitForVisibility(monthElement,2);
         monthElement.click();
+
+        WebElement yearElement = Driver.get().findElement(By.xpath("//*[text()='" + exactYear + "']"));
+        yearDropDown.click();
+        BrowserUtils.waitForVisibility(yearElement,2);
+        BrowserUtils.clickWithJS(yearElement);
+        Thread.sleep(2000);
+
     }
 
 

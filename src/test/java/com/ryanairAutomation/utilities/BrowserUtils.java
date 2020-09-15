@@ -40,7 +40,7 @@ public class BrowserUtils {
     public static void scrollDown() {
 
         JavascriptExecutor jse = (JavascriptExecutor) Driver.get();
-        jse.executeScript("window.scrollBy(0,1000)");
+        jse.executeScript("window.scrollBy(0,500)");
 
     }
 

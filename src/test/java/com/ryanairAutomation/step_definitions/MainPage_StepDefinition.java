@@ -7,10 +7,12 @@ import com.ryanairAutomation.Pages.SeatSelectionPage;
 import com.ryanairAutomation.utilities.BrowserUtils;
 import com.ryanairAutomation.utilities.ConfigurationProperties;
 import com.ryanairAutomation.utilities.Driver;
+import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
@@ -102,7 +104,7 @@ public class MainPage_StepDefinition {
     }
 
     @When("I pay for booking with card details {string} {string} and {string}")
-    public void i_pay_for_booking_with_card_details_and(String cardnumber, String date, String cvv) {
+    public void i_pay_for_booking_with_card_details_and(String cardnumber, String date, String cvv) throws InterruptedException {
         BrowserUtils.waitForClickablility(creditCartPage.countryCode, 2);
         creditCartPage.countryCode.click();
         Actions actions = new Actions(Driver.get());
@@ -110,6 +112,7 @@ public class MainPage_StepDefinition {
         BrowserUtils.scrollWithJS(creditCartPage.Sudan);
         creditCartPage.Spain.click();
         BrowserUtils.scrollUp();
+        creditCartPage.phoneNumber.sendKeys("644820325");
         creditCartPage.noinsurance.click();
         BrowserUtils.scrollDown();
         BrowserUtils.waitForVisibility(creditCartPage.cardNumber, 2);
@@ -120,21 +123,21 @@ public class MainPage_StepDefinition {
         creditCartPage.cardHolderName.sendKeys("Musab Guzelel");
         creditCartPage.adressLine1.sendKeys("Calle Pio IX");
         creditCartPage.city.sendKeys("Valencia");
-        // creditCartPage.country.click();
-        // creditCartPage.country.sendKeys("Spain", Keys.ENTER);
-        //  creditCartPage.zipCode.click();
-        //  creditCartPage.zipCode.sendKeys("46017");
-        // creditCartPage.currency.click();
+        creditCartPage.country.sendKeys("Spain", Keys.ENTER);
+        creditCartPage.currency.click();
+        creditCartPage.currencyType.click();
+        creditCartPage.zipCode.sendKeys("46017");
+        BrowserUtils.scrollWithJS(creditCartPage.clickPayTick);
         creditCartPage.clickPayTick.click();
         creditCartPage.payNow.click();
-        // creditCartPage.phoneNumber.sendKeys("644820325");
+
 
     }
 
     @Then("I should get payment declined message")
     public void i_should_get_payment_declined_message() {
 
-        System.out.println("The Dropdown button functionality were not working fine that's why task isn't completed");
+        System.out.println("creditCartPage.errormessage.getText() = " + creditCartPage.errorMessage.getText());
 
     }
 
