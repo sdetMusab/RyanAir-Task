@@ -12,6 +12,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -137,6 +138,8 @@ public class MainPage_StepDefinition {
     @Then("I should get payment declined message")
     public void i_should_get_payment_declined_message() {
 
+        String errormessage = "Oops, something went wrong. Please check your payment details and try again";
+        Assert.assertEquals(errormessage,creditCartPage.errorMessage.getText());
         System.out.println("creditCartPage.errormessage.getText() = " + creditCartPage.errorMessage.getText());
 
     }

@@ -79,7 +79,7 @@ public class CreditCartPage {
     @FindBy(xpath = "//*[contains(text(),' Pay now ')]")
     public WebElement payNow;
 
-    @FindBy(xpath = "//ry-alert[@iconclass='icon-12']")
+    @FindBy(xpath = "//div[contains(text(),'Oops')]")
     public WebElement errorMessage;
 
     public void setYearandMonth(String date) throws InterruptedException {
